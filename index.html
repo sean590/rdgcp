@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ridge Capital Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --slate-900: #0f172a;
+            --slate-800: #1e293b;
+            --slate-700: #334155;
+            --slate-600: #475569;
+            --slate-500: #64748b;
+            --slate-400: #94a3b8;
+            --slate-300: #cbd5e1;
+            --slate-200: #e2e8f0;
+            --slate-100: #f1f5f9;
+            --slate-50: #f8fafc;
+            --white: #ffffff;
+            --accent: #2563eb;
+            --accent-light: #3b82f6;
+            --accent-dark: #1d4ed8;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--slate-800);
+            background: var(--white);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Navigation ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--slate-200);
+            transition: box-shadow 0.3s ease;
+        }
+        nav.scrolled { box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+
+        .nav-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .logo {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--slate-900);
+            text-decoration: none;
+        }
+        .logo span { color: var(--accent); }
+
+        .nav-links {
+            display: flex;
+            gap: 36px;
+            list-style: none;
+        }
+        .nav-links a {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--slate-500);
+            text-decoration: none;
+            letter-spacing: 0.02em;
+            transition: color 0.2s ease;
+        }
+        .nav-links a:hover { color: var(--slate-900); }
+
+        /* ── Hero ── */
+        .hero {
+            padding: 160px 32px 100px;
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+        .hero h1 {
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 700;
+            line-height: 1.12;
+            color: var(--slate-900);
+            max-width: 720px;
+            margin-bottom: 28px;
+        }
+        .hero-subtitle {
+            font-size: 19px;
+            color: var(--slate-500);
+            max-width: 580px;
+            line-height: 1.7;
+            font-weight: 300;
+            margin-bottom: 48px;
+        }
+        .divider-line {
+            width: 48px;
+            height: 2px;
+            background: var(--accent);
+            margin-bottom: 28px;
+        }
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--accent);
+            text-decoration: none;
+            letter-spacing: 0.01em;
+            transition: gap 0.2s ease;
+        }
+        .hero-cta:hover { gap: 12px; }
+        .hero-cta svg {
+            width: 16px; height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        /* ── Sections ── */
+        section { padding: 100px 32px; }
+
+        .section-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+        .section-title {
+            font-size: 30px;
+            font-weight: 600;
+            color: var(--slate-900);
+            margin-bottom: 16px;
+        }
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--slate-500);
+            max-width: 600px;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* ── Mission Banner ── */
+        .mission-banner {
+            background: var(--slate-900);
+            padding: 80px 32px;
+        }
+        .mission-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+        .mission-quote {
+            font-size: 24px;
+            font-weight: 300;
+            color: var(--white);
+            line-height: 1.6;
+        }
+        .mission-quote em {
+            font-style: normal;
+            color: var(--accent-light);
+        }
+        .mission-details p {
+            font-size: 15px;
+            color: var(--slate-400);
+            line-height: 1.8;
+        }
+
+        /* ── About ── */
+        #about { background: var(--slate-50); }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            margin-top: 48px;
+            align-items: start;
+        }
+        .about-text p {
+            font-size: 15px;
+            color: var(--slate-600);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .highlights {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        .highlight {
+            padding: 28px;
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 8px;
+        }
+        .highlight-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--slate-900);
+            margin-bottom: 4px;
+        }
+        .highlight-label {
+            font-size: 13px;
+            color: var(--slate-500);
+        }
+
+        /* ── What We Build ── */
+        .build-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 48px;
+        }
+        .build-card {
+            padding: 36px 32px;
+            border: 1px solid var(--slate-200);
+            border-radius: 8px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .build-card:hover {
+            border-color: var(--slate-300);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+        .build-icon {
+            width: 40px; height: 40px;
+            background: var(--slate-100);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        .build-card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--slate-900);
+            margin-bottom: 10px;
+        }
+        .build-card p {
+            font-size: 14px;
+            color: var(--slate-500);
+            line-height: 1.7;
+        }
+
+        /* ── How We Work ── */
+        #how { background: var(--slate-50); }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-top: 48px;
+        }
+        .p-step { position: relative; }
+        .p-step-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--slate-200);
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+        .p-step h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--slate-900);
+            margin-bottom: 10px;
+        }
+        .p-step p {
+            font-size: 14px;
+            color: var(--slate-500);
+            line-height: 1.7;
+        }
+
+        /* ── Values ── */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 48px;
+            margin-top: 48px;
+        }
+        .value-item { }
+        .value-item h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--slate-900);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .value-item h3::before {
+            content: '';
+            width: 8px; height: 8px;
+            background: var(--accent);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        .value-item p {
+            font-size: 14px;
+            color: var(--slate-500);
+            line-height: 1.7;
+            padding-left: 18px;
+        }
+
+        /* ── Contact ── */
+        .contact-content {
+            margin-top: 48px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+        }
+        .contact-info p {
+            font-size: 15px;
+            color: var(--slate-600);
+            line-height: 1.8;
+            margin-bottom: 32px;
+        }
+        .contact-detail { margin-bottom: 20px; }
+        .contact-detail-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--slate-400);
+            margin-bottom: 4px;
+        }
+        .contact-detail-value {
+            font-size: 15px;
+            color: var(--slate-800);
+        }
+        .contact-detail-value a {
+            color: var(--slate-800);
+            text-decoration: none;
+            border-bottom: 1px solid var(--slate-300);
+            transition: border-color 0.2s ease;
+        }
+        .contact-detail-value a:hover { border-color: var(--accent); }
+
+        /* ── Footer ── */
+        footer {
+            padding: 48px 32px;
+            border-top: 1px solid var(--slate-200);
+        }
+        .footer-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .footer-left {
+            font-size: 13px;
+            color: var(--slate-400);
+        }
+        .footer-right {
+            font-size: 12px;
+            color: var(--slate-400);
+            max-width: 420px;
+            text-align: right;
+            line-height: 1.6;
+        }
+
+        /* ── Mobile ── */
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+        .mobile-toggle span {
+            display: block;
+            width: 20px; height: 1.5px;
+            background: var(--slate-700);
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-toggle { display: block; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 72px; left: 0; right: 0;
+                background: var(--white);
+                flex-direction: column;
+                padding: 24px 32px;
+                gap: 20px;
+                border-bottom: 1px solid var(--slate-200);
+            }
+            .nav-links.open { display: flex; }
+            .hero { padding: 140px 24px 80px; }
+            .about-grid,
+            .build-grid,
+            .process-steps,
+            .contact-content,
+            .values-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            .mission-inner { grid-template-columns: 1fr; gap: 32px; }
+            .highlights { grid-template-columns: 1fr 1fr; }
+            .footer-inner {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+            .footer-right { text-align: center; }
+            section { padding: 64px 24px; }
+            .mission-banner { padding: 64px 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-inner">
+            <a href="#" class="logo">Ridge <span>Capital</span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about">About</a></li>
+                <li><a href="#track-record">Track Record</a></li>
+                <li><a href="#build">What We Build</a></li>
+<li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="divider-line"></div>
+        <h1>We build technology companies from the ground up.</h1>
+        <p class="hero-subtitle">Ridge Capital Management is a private family office that creates, develops, and operates technology businesses. We turn our own ideas into real products and grow them into independent companies.</p>
+        <a href="#about" class="hero-cta">
+            Learn more about us
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" /></svg>
+        </a>
+    </section>
+
+    <!-- Mission Banner -->
+    <div class="mission-banner">
+        <div class="mission-inner">
+            <div class="mission-quote">
+                We don't wait for the right opportunity to come along. We <em>create</em> it, build the team around it, and do the work to make it real.
+            </div>
+            <div class="mission-details">
+                <p>Ridge Capital Management operates as an internal incubator. We generate ideas, validate them, build products, and launch them as standalone companies. Every project we take on is one we believe in enough to build ourselves — from first line of code to first customer and beyond.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- About -->
+    <section id="about" style="background: var(--white); padding: 80px 32px;">
+        <div class="section-inner">
+            <div class="section-label">About</div>
+            <h2 class="section-title" style="max-width: 640px;">A holding company built for builders</h2>
+            <p class="section-subtitle" style="max-width: 640px;">Ridge Capital Management is a private family office that builds and operates technology companies. We develop our own ideas, bring them to market, and grow them into independent businesses.</p>
+        </div>
+    </section>
+
+    <!-- Track Record -->
+    <section id="track-record" style="background: var(--slate-50);">
+        <div class="section-inner">
+            <div class="section-label">Track Record</div>
+            <h2 class="section-title">Companies we've built</h2>
+            <p class="section-subtitle">Our leadership team has founded, built, and scaled technology and telecommunications companies from inception through successful exits.</p>
+            <div class="build-grid" style="margin-top: 48px;">
+                <div class="build-card">
+                    <h3>Wurl</h3>
+                    <p>Created a leading platform for streaming television distribution, connecting content providers with connected TV platforms and powering ad-supported streaming at scale.</p>
+                </div>
+                <div class="build-card">
+                    <h3>Progress Telecom</h3>
+                    <p>Built a fiber-optic telecommunications network providing enterprise connectivity and infrastructure services across the southeastern United States.</p>
+                </div>
+                <div class="build-card">
+                    <h3>TowerCloud</h3>
+                    <p>Developed fiber-based backhaul infrastructure connecting cell towers to carrier networks, enabling the expansion of mobile broadband capacity nationwide.</p>
+                </div>
+                <div class="build-card">
+                    <h3>@Home Network</h3>
+                    <p>Pioneered high-speed internet delivery over cable infrastructure, becoming one of the first broadband internet service providers in the United States.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What We Build -->
+    <section id="build">
+        <div class="section-inner">
+            <div class="section-label">What We Build</div>
+            <h2 class="section-title">Our areas of focus</h2>
+            <p class="section-subtitle">We build products in sectors we understand deeply, where technology creates real value and where we can move faster than the market.</p>
+            <div class="build-grid">
+                <div class="build-card">
+                    <div class="build-icon">⚡</div>
+                    <h3>Software &amp; SaaS</h3>
+                    <p>Cloud-based platforms and tools that solve real operational problems for businesses. We build software we'd want to use ourselves.</p>
+                </div>
+                <div class="build-card">
+                    <div class="build-icon">📱</div>
+                    <h3>Mobile &amp; Consumer Apps</h3>
+                    <p>Consumer-facing products designed around exceptional user experience. We focus on apps that become part of people's daily routines.</p>
+                </div>
+                <div class="build-card">
+                    <div class="build-icon">🤖</div>
+                    <h3>AI &amp; Machine Learning</h3>
+                    <p>Intelligent systems that automate workflows, surface insights, and make complex tasks simple. We apply AI where it creates practical, measurable value.</p>
+                </div>
+                <div class="build-card">
+                    <div class="build-icon">🔗</div>
+                    <h3>Developer Tools &amp; Infrastructure</h3>
+                    <p>The picks and shovels that other technology products are built on — APIs, platforms, and services that power the ecosystem.</p>
+                </div>
+                <div class="build-card">
+                    <div class="build-icon">💡</div>
+                    <h3>Digital Media &amp; Content</h3>
+                    <p>Platforms and tools for creators, publishers, and media companies. We build technology at the intersection of content and distribution.</p>
+                </div>
+                <div class="build-card">
+                    <div class="build-icon">📊</div>
+                    <h3>Data Products &amp; Analytics</h3>
+                    <p>Products that help people and businesses make better decisions. We turn data into clear, actionable intelligence.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <div class="section-inner">
+            <div class="section-label">Contact</div>
+            <h2 class="section-title">Get in touch</h2>
+            <p class="section-subtitle">We're always interested in hearing from talented people and potential collaborators.</p>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <p>Whether you're an engineer or designer who wants to build something new, a domain expert with insights into a problem worth solving, or just someone who shares our approach to building technology — we'd enjoy the conversation.</p>
+                    <div class="contact-detail">
+                        <div class="contact-detail-label">General Inquiries</div>
+                        <div class="contact-detail-value"><a href="mailto:info@rdgcp.com">info@rdgcp.com</a></div>
+                    </div>
+                    <div class="contact-detail">
+                        <div class="contact-detail-label">Location</div>
+                        <div class="contact-detail-value">United States</div>
+                    </div>
+                </div>
+                <div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-left">&copy; 2026 Ridge Capital Management. All rights reserved.</div>
+            <div class="footer-right">Ridge Capital Management is a private family office and holding company. This website is for informational purposes only.</div>
+        </div>
+    </footer>
+
+    <script>
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 10);
+        });
+
+        const toggle = document.getElementById('mobileToggle');
+        const links = document.getElementById('navLinks');
+        toggle.addEventListener('click', () => links.classList.toggle('open'));
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => links.classList.remove('open'));
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.08 });
+
+        document.querySelectorAll('section:not(.hero), .mission-banner').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+
+</body>
+</html>
